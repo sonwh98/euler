@@ -1,4 +1,4 @@
-package euler.problem67
+package problem67.groovy
 
 /**
  * User: son.c.to@gmail.com

@@ -1,4 +1,4 @@
-package euler.problem67
+package problem67.groovy
 
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +26,7 @@ class TriangleTests {
     @Test
     void depthFirstTraversalSum() {
         Integer maxSum = 0
-        triangle.depthFirstTraversal { Node n ->
+        triangle.depthFirstTraversal { groovy.util.Node n ->
             maxSum = Math.max(maxSum, n.calculateWeightedSum())
         }
 
@@ -36,7 +36,7 @@ class TriangleTests {
     @Test
     void depthFirstTraversalLeafNodesSum() {
         Integer maxSum = 0
-        triangle.depthFirstTraversal { Node n ->
+        triangle.depthFirstTraversal { groovy.util.Node n ->
             if (n.isLeaf()) {
                 maxSum = Math.max(maxSum, n.calculateWeightedSum())
             }
@@ -47,7 +47,7 @@ class TriangleTests {
 
     @Test
     void testWeightedSum() {
-        Node seven = triangle.left.right.left
+        groovy.util.Node seven = triangle.left.right.left
         Integer leftParentWeight = seven.leftParent.calculateWeightedSum()
         Integer rightParentWeight = seven.rightParent.calculateWeightedSum()
         assertEquals 18, leftParentWeight
@@ -100,14 +100,14 @@ class TriangleTests {
         assertEquals 5, triangle.right.right.right.value
         assertEquals 8, triangle.right.right.right.leftParent.value
 
-        List<Integer> leafNodeValues = triangle.leafNodes.collect { Node n -> n.value }
+        List<Integer> leafNodeValues = triangle.leafNodes.collect { groovy.util.Node n -> n.value }
 
         assertEquals([0, 7, 1, 5], leafNodeValues)
     }
 
     @Test
     void testGrid() {
-        Map<List, Node> triangle = Triangle.createGridFrom(file: "triangle_test_4rows.txt")
+        Map<List, groovy.util.Node> triangle = Triangle.createGridFrom(file: "triangle_test_4rows.txt")
         assertEquals 5, triangle[0, 0].value
         assertEquals 9, triangle[1, 0].value
         assertEquals 8, triangle[2, 2].value
@@ -128,7 +128,7 @@ class TriangleTests {
             }
         }
 
-        def (Node root, List leafNodes) = Triangle.createGraphFrom(file: "triangle_test_extra_lines_between_rows.txt")
+        def (groovy.util.Node root, List leafNodes) = Triangle.createGraphFrom(file: "triangle_test_extra_lines_between_rows.txt")
         assertNotNull root
         assertNotNull leafNodes
         assertEquals 5, root.value

@@ -1,4 +1,4 @@
-package euler.problem67
+package problem67.groovy
 
 /**
  * User: son.c.to@gmail.com
@@ -7,15 +7,15 @@ package euler.problem67
  */
 class Triangle {
     @Delegate
-    Node root
-    List<Node> leafNodes
+    groovy.util.Node root
+    List<groovy.util.Node> leafNodes
 
     Triangle(Map params) {
         (root, leafNodes) = createGraphFrom(file: params.file)
     }
 
     Integer findMaxSum() {
-        leafNodes.inject(0) { Integer maxSum, Node n ->
+        leafNodes.inject(0) { Integer maxSum, groovy.util.Node n ->
             Math.max(maxSum, n.calculateWeightedSum())
         }
     }
@@ -32,7 +32,7 @@ class Triangle {
         Map grid = [:]
         for (int row = 0; row < triangle.size(); row++) {
             for (int col = 0; col < triangle[row].size(); col++) {
-                grid[row, col] = new Node(value: triangle[row][col])
+                grid[row, col] = new groovy.util.Node(value: triangle[row][col])
             }
         }
         return grid
@@ -46,7 +46,7 @@ class Triangle {
         coordinates.each { List tuple ->
             int row = tuple[0]
             int col = tuple[1]
-            Node node = triangle[tuple]
+            groovy.util.Node node = triangle[tuple]
             if (col == 0) {
                 node.leftParent = null
             } else {
@@ -59,7 +59,7 @@ class Triangle {
                 leafNodes << node
             }
         }
-        Node root = triangle[0, 0]
+        groovy.util.Node root = triangle[0, 0]
         return [root, leafNodes]
     }
 }
