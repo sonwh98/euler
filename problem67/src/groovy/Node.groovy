@@ -1,4 +1,4 @@
-package problem67.groovy
+package groovy
 
 /**
  * User: son.c.to@gmail.com

@@ -1,4 +1,4 @@
-package problem67.groovy
+package groovy
 
 import org.junit.Before
 import org.junit.Test
