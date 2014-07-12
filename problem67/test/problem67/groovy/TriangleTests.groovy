@@ -10,11 +10,11 @@ import static org.junit.Assert.*
  * Time: 10:26 PM
  */
 class TriangleTests {
-    Triangle triangle
+    Triangle smallTriangle
 
     @Before
     void setUp() {
-        triangle = new Triangle(file: "problem67/test/data/smallTriangle.txt") //https://projecteuler.net/problem=67
+        smallTriangle = new Triangle(file: "problem67/test/data/smallTriangle.txt") //https://projecteuler.net/problem=67
     }
 
     @Test
@@ -27,14 +27,14 @@ class TriangleTests {
 
     @Test
     void findMaxSum() {
-        Integer maxSum = triangle.findMaxSum()
+        Integer maxSum = smallTriangle.findMaxSum()
         assertEquals 23, maxSum
     }
 
     @Test
     void depthFirstTraversalSum() {
         Integer maxSum = 0
-        triangle.depthFirstTraversal { Node n ->
+        smallTriangle.depthFirstTraversal { Node n ->
             maxSum = Math.max(maxSum, n.calculateWeightedSum())
         }
 
@@ -44,7 +44,7 @@ class TriangleTests {
     @Test
     void depthFirstTraversalLeafNodesSum() {
         Integer maxSum = 0
-        triangle.depthFirstTraversal { Node n ->
+        smallTriangle.depthFirstTraversal { Node n ->
             if (n.isLeaf()) {
                 maxSum = Math.max(maxSum, n.calculateWeightedSum())
             }
@@ -55,7 +55,7 @@ class TriangleTests {
 
     @Test
     void testWeightedSum() {
-        Node nine = triangle.left.right.right
+        Node nine = smallTriangle.left.right.right
         Integer leftParentWeight = nine.leftParent.calculateWeightedSum()
         Integer rightParentWeight = nine.rightParent.calculateWeightedSum()
         assertEquals 14, leftParentWeight
@@ -63,51 +63,52 @@ class TriangleTests {
     }
 
     @Test
-    void testCreateGraph() {
-        assertEquals 3, triangle.value
+    void testCreateGraphFrom() {
+        def (Node root, List<Node> leafNodes) = Triangle.createGraphFrom(file: "problem67/test/data/smallTriangle.txt")
+        assertEquals 3, root.value
 
-        assertEquals 7, triangle.left.value
-        assertEquals null, triangle.left.leftParent
+        assertEquals 7, root.left.value
+        assertEquals null, root.left.leftParent
 
-        assertEquals 3, triangle.left.rightParent.value
+        assertEquals 3, root.left.rightParent.value
 
-        assertEquals 4, triangle.right.value
-        assertEquals 3, triangle.right.leftParent.value
+        assertEquals 4, root.right.value
+        assertEquals 3, root.right.leftParent.value
 
-        assertEquals 4, triangle.right.left.value
-        assertEquals 4, triangle.right.left.rightParent.value
-        assertEquals 7, triangle.right.left.leftParent.value
+        assertEquals 4, root.right.left.value
+        assertEquals 4, root.right.left.rightParent.value
+        assertEquals 7, root.right.left.leftParent.value
 
-        assertEquals 2, triangle.left.left.value
-        assertEquals null, triangle.left.left.leftParent
-        assertEquals 7, triangle.left.left.rightParent.value
-
-
-        assertEquals 4, triangle.left.right.value
-        assertEquals 7, triangle.left.right.leftParent.value
+        assertEquals 2, root.left.left.value
+        assertEquals null, root.left.left.leftParent
+        assertEquals 7, root.left.left.rightParent.value
 
 
-        assertEquals 4, triangle.left.right.rightParent.value
-        assertEquals 6, triangle.right.right.value
+        assertEquals 4, root.left.right.value
+        assertEquals 7, root.left.right.leftParent.value
 
-        assertEquals 8, triangle.left.left.left.value
-        assertEquals null, triangle.left.left.left.leftParent
-        assertEquals 2, triangle.left.left.left.rightParent.value
 
-        assertEquals 5, triangle.left.left.right.value
-        assertEquals triangle.left.left.right, triangle.right.left.left
-        assertEquals 2, triangle.left.left.right.leftParent.value
-        assertEquals 4, triangle.left.left.right.rightParent.value
+        assertEquals 4, root.left.right.rightParent.value
+        assertEquals 6, root.right.right.value
 
-        assertEquals 9, triangle.left.right.right.value
-        assertEquals 4, triangle.left.right.right.leftParent.value
-        assertEquals 6, triangle.left.right.right.rightParent.value
-        assertEquals triangle.left.right.right.value, triangle.right.right.left.value
+        assertEquals 8, root.left.left.left.value
+        assertEquals null, root.left.left.left.leftParent
+        assertEquals 2, root.left.left.left.rightParent.value
 
-        assertEquals 3, triangle.right.right.right.value
-        assertEquals 6, triangle.right.right.right.leftParent.value
+        assertEquals 5, root.left.left.right.value
+        assertEquals root.left.left.right, root.right.left.left
+        assertEquals 2, root.left.left.right.leftParent.value
+        assertEquals 4, root.left.left.right.rightParent.value
 
-        List<Integer> leafNodeValues = triangle.leafNodes.collect { Node n -> n.value }
+        assertEquals 9, root.left.right.right.value
+        assertEquals 4, root.left.right.right.leftParent.value
+        assertEquals 6, root.left.right.right.rightParent.value
+        assertEquals root.left.right.right.value, root.right.right.left.value
+
+        assertEquals 3, root.right.right.right.value
+        assertEquals 6, root.right.right.right.leftParent.value
+
+        List<Integer> leafNodeValues = leafNodes.collect { Node n -> n.value }
 
         assertEquals([8, 5, 9, 3], leafNodeValues)
     }
