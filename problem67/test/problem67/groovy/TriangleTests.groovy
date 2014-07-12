@@ -18,6 +18,14 @@ class TriangleTests {
     }
 
     @Test
+    void solutionToProblem67() {
+        Triangle bigTriangle = new Triangle(file: "problem67/test/data/bigTriangle.txt")
+        Integer solution = bigTriangle.findMaxSum()
+        assertEquals 7273, solution
+        println("solution is ${solution}")
+    }
+
+    @Test
     void findMaxSum() {
         Integer maxSum = triangle.findMaxSum()
         assertEquals 23, maxSum
@@ -113,6 +121,7 @@ class TriangleTests {
         assertEquals 8, triangle[3, 0].value
         assertEquals 5, triangle[3, 1].value
     }
+
 
 }
 
